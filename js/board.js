@@ -16,7 +16,7 @@ class Board {
     }
     clear() {
         for (let i=0; i<this.h*this.w; i++) {
-            this.inputs[i]=-1;
+            this.inputs[i]=0;
         }
     }
     draw() {
@@ -42,7 +42,7 @@ class Board {
                     for (let k=-1;k<=1;k++) {
                         for (let l=-1;l<=1;l++) {
                             if (inside(j+l,i+k,0,0,this.w-1,this.h-1)) {
-                                var v=fourDigits(1-Math.hypot(k,l)/2);
+                                var v=fourDigits(1.42-Math.hypot(k,l)/1.42);
                                 if (v>this.inputs[(i+k)*this.w+(j+l)]) {
                                     this.inputs[(i+k)*this.w+(j+l)]=v;
                                 }

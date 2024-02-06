@@ -63,7 +63,7 @@ class Layer {
         for (let i=0;i<this.ins.length;i++) {
             for (let j=0;j<this.outs.length;j++) {
                 if (this.ins[i]>0.5&&j==v) this.weight[j][i]=.9999;
-                else if (this.weight[j][i]==0) this.weight[j][i]=-.9999;
+                //else if (this.weight[j][i]==0) this.weight[j][i]=-.9999;
             }
         }
     }
@@ -82,8 +82,9 @@ class Layer {
             for (let j=0; j<this.outs.length; j++) {
                 ctx.beginPath();
                 ctx.moveTo(this.x+this.ii[i]*this.dix,this.y+this.id/2);
-                var r=127*(this.weight[this.oo[j]][this.ii[i]]+1);
-                ctx.strokeStyle="rgb("+r+","+r+","+r+")";
+                var w=this.weight[this.oo[j]][this.ii[i]];
+                var r=255*Math.abs(w);
+                ctx.strokeStyle="rgb("+(w<0?r:0)+","+(w<0?0:r)+","+0+")";
                 ctx.lineTo(this.x+this.oo[j]*this.dox,this.y-this.od/2+this.dy);
                 ctx.stroke();
                 ctx.strokeStyle="black";
@@ -117,6 +118,7 @@ class Layer {
         }
     }
     sigmoid(x) {
+        return Math.min(Math.max(0,x),1);
         return 1-1/(1+Math.pow(Math.E,x));
     }
     mouseOver(evt) {

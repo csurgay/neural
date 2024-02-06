@@ -7,7 +7,7 @@ class Network {
         this.init();
     }
     init() {
-        var dy=Math.floor((window.innerHeight-50)/(this.l.length-1));
+        var dy=Math.floor((window.innerHeight-100)/(this.l.length-1));
         for (let i=0; i<this.l.length-1; i++)
             this.layers.push(new Layer(i+1,this.x,this.y+i*dy+15,this.l[i],this.l[i+1],dy));
     }

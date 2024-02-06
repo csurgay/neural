@@ -34,9 +34,10 @@ class File {
         if (DEBUG) console.log(c);
         var bptr=0;
         str.forEach(v=>{
-            if (bptr<b.inputs.length) b.inputs[bptr++]=+v;
+            if (bptr<b.inputs.length) {
+                b.inputs[bptr++]=(+v+1)/2;
+            }
         })
-        animate();
     }
     getFileNames(dir) {
         var request=new XMLHttpRequest();

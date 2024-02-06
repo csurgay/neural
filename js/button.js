@@ -1,3 +1,16 @@
+const fonts=[
+    "Arial Narrow",
+    "Arial",
+    "Verdana",
+    "Tahoma",
+    "Trebuchet MS",
+    "Times New Roman",
+    "Georgia",
+    "Garamond",
+    "Courier New",
+    "Brush Script MT"];
+var ptrFonts=0;
+
 class Button {
     constructor(x,y,w,h,title) {
         this.x=x;
@@ -14,7 +27,9 @@ class Button {
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle=this.on?"white":"black";
-        ctx.font="14px arial";
+        ctx.font="14px "+fonts[ptrFonts];
+        ctx.font="13px Arial";
+        ptrFonts=(ptrFonts+1)%fonts.length;
         ctx.fillText(this.title,this.x+this.w/2,this.y+this.h/2);
     }
     mouseOver(x,y) {
@@ -23,53 +38,50 @@ class Button {
         }
     }
     action(x,y) {
-        if (this.title=="debug") {
+        if (this.title=="Debug") {
             this.on=!this.on;
             DEBUG=this.on;
         }
-        if (this.title=="run") {
+        if (this.title=="Run") {
             this.on=!this.on;
             s.newState(this.on?"RUN":"IDLE");
         }
-        if (this.title=="clr input") {
+        if (this.title=="Clr input") {
             b.clear();
         }
-        if (this.title=="rnd input") {
+        if (this.title=="Rnd input") {
             b.randomInput();
         }
-        if (this.title=="clr weight") {
+        if (this.title=="Clr weight") {
             n.clearWeight();
         }
-        if (this.title=="rnd weight") {
+        if (this.title=="Rnd weight") {
             n.randomWeight();
         }
-        if (this.title=="clr bias") {
+        if (this.title=="Clr bias") {
             n.clearBias();
         }
-        if (this.title=="rnd bias") {
+        if (this.title=="Rnd bias") {
             n.randomBias();
         }
-        if (this.title=="rnd order") {
+        if (this.title=="Rnd order") {
             n.randomOrder();
         }
-        if (this.title=="classif") {
+        if (this.title=="Classif") {
             if (s.state=="IDLE") s.newState("CLASSIF");
         }
-        if (this.title=="loadInput") {
+        if (this.title=="LoadInput") {
             fptr=(fptr+1)%files.length;
             f.loadInputClassified("sample/"+files[fptr]);
         }
-        if (this.title=="loadRun") {
+        if (this.title=="LoadRun") {
             this.on=!this.on;
             s.newState(this.on?"LOADRUN":"IDLE");
         }
-        if (this.title=="set1") {
-        }
-        animate();
     }
 }
 
-class Bar {
+class ButtonBar {
     constructor(x,y,w,dy) {
         this.x=x;
         this.y=y;
@@ -80,21 +92,20 @@ class Bar {
         this.init();
     }
     init() {
-        this.addButton("debug");
-        this.addButton("run");
-        this.addButton("clr input");
-        this.addButton("rnd input");
-        this.addButton("clr weight");
-        this.addButton("rnd weight");
-        this.addButton("clr bias");
-        this.addButton("rnd bias");
-        this.addButton("rnd order");
-        this.addButton("classif");
-        this.addButton("loadInput");
-        this.addButton("loadRun");
-        this.addButton("saveNet");
-        this.addButton("loadNet");
-        this.addButton("set1");
+        this.addButton("Debug");
+        this.addButton("Run");
+        this.addButton("Clr input");
+        this.addButton("Rnd input");
+        this.addButton("Clr weight");
+        this.addButton("Rnd weight");
+        this.addButton("Clr bias");
+        this.addButton("Rnd bias");
+        this.addButton("Rnd order");
+        this.addButton("Classif");
+        this.addButton("LoadInput");
+        this.addButton("LoadRun");
+        this.addButton("SaveNet");
+        this.addButton("LoadNet");
     }
     addButton(title) {
         this.b.push(new Button(this.x,this.y+this.dy*this.n++,this.w,this.dy,title));

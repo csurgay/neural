@@ -13,13 +13,11 @@ class Events {
         if (b.mouseOver(evt)) {
             s.newState("DRAW");
             b.action(evt);
-            animate();
         }
     }
     mousemove(evt) {
         if (s.state=="DRAW") {
             b.action(evt);
-            animate();
         }
         else for (let i=0;i<n.layers.length;i++) {
             var ret=n.layers[i].mouseOver(evt);
@@ -36,10 +34,9 @@ class Events {
             if (DEBUG) console.log(v);
             f.saveInputClassified(v);
             s.newState("IDLE");
-            animate();
         }
-        else if (bar.mouseOver(evt.clientX,evt.clientY))
-            bar.action(evt.clientX,evt.clientY);
+        else if (bbar.mouseOver(evt.clientX,evt.clientY))
+            bbar.action(evt.clientX,evt.clientY);
         else s.newState("IDLE");
     }
 }
