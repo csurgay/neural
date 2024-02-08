@@ -1,3 +1,4 @@
+var ret;
 class Events {
     constructor() {
     }
@@ -19,13 +20,21 @@ class Events {
         if (s.state=="DRAW") {
             b.action(evt);
         }
-        else for (let i=0;i<n.layers.length;i++) {
-            var ret=n.layers[i].mouseOver(evt);
-            if (ret&&(ret["layer"]!=lastLayer||ret["output"]!=lastOutput)) {
-                lastLayer=ret["layer"];
-                lastOutput=ret["output"];
-                if (DEBUG) console.log("Layer:"+lastLayer+" Output:"+lastOutput+" Bias:"+n.layers[lastLayer-1].bias[lastOutput]+" Value:"+n.layers[lastLayer-1].outs[lastOutput]);
+        else {
+            var isWeightMap=false;
+            for (let i=0;i<n.layers.length;i++) {
+                ret=n.layers[i].mouseOver(evt);
+                if (ret) {
+                    isWeightMap=true;
+                    if (ret["layer"]!=lastLayer||ret["output"]!=lastOutput) {
+                        lastLayer=ret["layer"];
+                        lastOutput=ret["output"];
+                        if (DEBUG) console.log("Layer:"+lastLayer+" Output:"+lastOutput+" Bias:"+n.layers[lastLayer-1].bias[lastOutput]+" Value:"+n.layers[lastLayer-1].outs[lastOutput]);
+                    }
+                    n.layers[lastLayer-1].setDisplayWeightMap(lastOutput);
+                }
             }
+            if (!isWeightMap && n.layers[lastLayer-1]) n.layers[lastLayer-1].displayWeightMap=false;
         }
     }
     mouseup(evt) {

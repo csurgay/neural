@@ -17,6 +17,8 @@ class Layer {
         this.ii=[];
         this.oo=[];
         this.randomOrder();
+        this.weightMap=new Board(x+100,y,b.w,b.h);
+        this.displayWeightMap=false;
     }
 
     init() {
@@ -76,6 +78,10 @@ class Layer {
             this.outs[i]=fourDigits(this.sigmoid(sum+this.bias[i]));
         }
     }
+    setDisplayWeightMap(o) {
+        this.displayWeightMap=true;
+        this.weightMap.inputs=this.weight[o];
+    }
     draw() {
         // Weights
         for (let i=0; i<this.ins.length; i++) {
@@ -106,16 +112,18 @@ class Layer {
             for (let i=0;i<this.outs.length;i++) {
                 ctx.beginPath();
                 ctx.rect(this.x+i*this.dox-this.od/2,this.y-this.od/2+this.dy,this.od,this.od);
-                var r=25*(this.bias[i]+5);
-                ctx.fillStyle="rgb("+r+","+r+","+r+")";
+                var r=50*this.bias[i];
+                ctx.fillStyle="rgb("+(r<0?-r:0)+","+(r<0?0:r)+","+0+")";
                 ctx.fill();
                 ctx.beginPath();
-                ctx.rect(this.x+i*this.dox-this.od/2,this.y-this.od/2+this.dy,this.od-5,this.od-5);
+                ctx.rect(this.x+i*this.dox-this.od/2,this.y-this.od/2+this.dy,this.od-3,this.od-3);
                 var r=255*this.outs[i]+1;
                 ctx.fillStyle="rgb("+r+","+r+","+r+")";
                 ctx.fill();
             }
         }
+        // WeightMap
+        if (this.displayWeightMap) this.weightMap.draw(true);
     }
     sigmoid(x) {
         return Math.min(Math.max(0,x),1);

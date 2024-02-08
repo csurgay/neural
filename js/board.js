@@ -1,3 +1,5 @@
+var r;
+
 class Board {
     constructor(x,y,w,h) {
         this.x=x;
@@ -19,14 +21,15 @@ class Board {
             this.inputs[i]=0;
         }
     }
-    draw() {
+    draw(color=false) {
         for (let i=0; i<this.h; i++) {
             for (let j=0; j<this.w; j++) {
                 ctx.beginPath();
                 ctx.rect(this.x+j*this.d,this.y+i*this.d,this.d,this.d);
                 ctx.stroke();
-                var r=255*this.inputs[i*this.w+j];
-                ctx.fillStyle="rgb("+r+","+r+","+r+")";
+                r=255*this.inputs[i*this.w+j];
+                if (color) ctx.fillStyle="rgb("+(r<0?-r:0)+","+(r<0?0:r)+","+0+")";
+                else ctx.fillStyle="rgb("+r+","+r+","+r+")";
                 ctx.fill();
             }
         }

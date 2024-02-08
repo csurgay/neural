@@ -37,7 +37,7 @@ function animate() {
     n.draw();
     c.draw();
     bbar.draw();
-    check();
+//    check();
     if (s.state=="LOADRUN") {
         if (files[0]===undefined) {}
         else {
