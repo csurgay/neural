@@ -6,9 +6,11 @@ class Events {
         canvas.addEventListener("mousedown", this.mousedown);
         canvas.addEventListener("mouseup", this.mouseup);
         canvas.addEventListener("mousemove", this.mousemove);
+        canvas.addEventListener("contextmenu", evt=>evt.preventDefault() );
     }
     mousedown(evt) {
         evt.preventDefault();
+        console.log("mousedown preventDefault");
         if (evt.button==0) {
             if (b.mouseOver(evt)) {
                 s.newState("DRAW");
@@ -44,6 +46,7 @@ class Events {
         }
     }
     mouseup(evt) {
+        console.log("mouseup preventDefault");
         evt.preventDefault();
         var v=c.mouseOver(evt.clientX,evt.clientY);
         if (v!=-1 && s.state=="CLASSIF") {
