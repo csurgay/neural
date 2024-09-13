@@ -8,16 +8,22 @@ class Events {
         canvas.addEventListener("mousemove", this.mousemove);
     }
     mousedown(evt) {
-        if (s.state=="IDLE") {
-            //s.newState("DOWN");
+        evt.preventDefault();
+        if (evt.button==0) {
+            if (b.mouseOver(evt)) {
+                s.newState("DRAW");
+                b.action(evt);
+            }
         }
-        if (b.mouseOver(evt)) {
-            s.newState("DRAW");
-            b.action(evt);
+        if (evt.button==2) {
+            if (b.mouseOver(evt)) {
+                s.newState("ERASE");
+                b.action(evt);
+            }
         }
     }
     mousemove(evt) {
-        if (s.state=="DRAW") {
+        if (s.state=="DRAW" || s.state=="ERASE") {
             b.action(evt);
         }
         else {
@@ -38,6 +44,7 @@ class Events {
         }
     }
     mouseup(evt) {
+        evt.preventDefault();
         var v=c.mouseOver(evt.clientX,evt.clientY);
         if (v!=-1 && s.state=="CLASSIF") {
             if (DEBUG) console.log(v);

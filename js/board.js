@@ -45,14 +45,24 @@ class Board {
                     for (let k=-1;k<=1;k++) {
                         for (let l=-1;l<=1;l++) {
                             if (inside(j+l,i+k,0,0,this.w-1,this.h-1)) {
-                                var v=fourDigits(1.42-Math.hypot(k,l)/1.42);
-                                if (v>this.inputs[(i+k)*this.w+(j+l)]) {
-                                    this.inputs[(i+k)*this.w+(j+l)]=v;
+                                var v;
+                                if (s.state=="DRAW") {
+                                    v=fourDigits(1.42-Math.hypot(k,l)/1.42);
+                                    if (v>this.inputs[(i+k)*this.w+(j+l)]) {
+                                        this.inputs[(i+k)*this.w+(j+l)]=v;
+                                    }
+                                }
+                                else if (s.state=="ERASE") {
+                                    v=fourDigits(Math.hypot(k,l)/1.42);
+                                    if (v<this.inputs[(i+k)*this.w+(j+l)]) {
+                                        this.inputs[(i+k)*this.w+(j+l)]=v;
+                                    }
                                 }
                             }
                         }
                     }
-                    this.inputs[i*this.w+j]=.9999;
+                    if (s.state=="DRAW") this.inputs[i*this.w+j]=.9999;
+                    else if (s.state=="ERASE") this.inputs[i*this.w+j]=0;
                 }
             }
         }
